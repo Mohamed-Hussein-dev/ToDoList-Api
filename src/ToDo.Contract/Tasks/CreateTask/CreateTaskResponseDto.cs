@@ -6,5 +6,8 @@ using System.Threading.Tasks;
 
 namespace ToDo.Contract.Tasks.CreateTask
 {
-    public record CreateTaskResponse(int TaskID , string TaskTitile , string TaskDescription , DateTime CreationTime, bool CurrentStatus );
+    public class CreateTaskResponseDto
+    {
+        public int TaskId { get; set; }
+    }
 }
