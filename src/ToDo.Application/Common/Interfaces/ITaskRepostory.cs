@@ -11,6 +11,8 @@ namespace ToDo.Application.Common.Interfaces
     {
         Task CreateTaskAsync(TaskItem task);
         Task DeleteTaskAsync(TaskItem task);
+        Task UpdateTaskAsync(TaskItem task);
         Task<TaskItem?> GetTaskAsync(int taskId);
+
     }
 }

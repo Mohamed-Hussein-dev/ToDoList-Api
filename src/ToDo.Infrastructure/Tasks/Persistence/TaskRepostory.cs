@@ -35,7 +35,13 @@ namespace ToDo.Infrastructure.Tasks.Persistence
 
         public async Task<TaskItem?> GetTaskAsync(int taskId)
         {
-            return await _dbContext.Tasks.FirstOrDefaultAsync(task => task.Id == taskId);
+            return await _dbContext.Tasks.AsNoTracking().FirstOrDefaultAsync(task => task.Id == taskId);
+        }
+
+        public async Task UpdateTaskAsync(TaskItem task)
+        {
+            _dbContext.Tasks.Update(task);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
