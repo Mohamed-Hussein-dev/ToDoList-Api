@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ToDo.Application.Tasks.Commands.CreateTask;
 using ToDo.Application.Tasks.Commands.DeleteTask;
+using ToDo.Application.Tasks.Queries.GetTask;
 using ToDo.Contract.Tasks.CreateTask;
 using ToDo.Domain.Entities;
 
@@ -42,10 +43,23 @@ namespace ToDo.Api.Controllers
             if (result.IsError)
             {
                 var error = result.FirstError;
-                return BadRequest(new { error = error.Description });
+                return NotFound(new { error = error.Description });
             }
 
             return NoContent();
+        }
+
+        [HttpGet("{TaskId}")]
+        public async Task<IActionResult> GetTask(int TaskId) {
+            var command = new GetTaskCommand(TaskId);
+            var result = await _mediator.Send(command);
+
+            if (result.IsError)
+            {
+                var error = result.FirstError;
+                return NotFound(new { error = error.Description });
+            }
+            return Ok(result.Value);
         }
     }
 }
