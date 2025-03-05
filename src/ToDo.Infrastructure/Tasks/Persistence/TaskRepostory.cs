@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using ToDo.Application.Common.Interfaces;
@@ -21,6 +23,19 @@ namespace ToDo.Infrastructure.Tasks.Persistence
         {
             await _dbContext.Tasks.AddAsync(task);
             await _dbContext.SaveChangesAsync();
+             
+        }
+
+        public async Task DeleteTaskAsync(TaskItem task)
+        {
+            _dbContext.Tasks.Remove(task);
+            await _dbContext.SaveChangesAsync();
+            
+        }
+
+        public async Task<TaskItem?> GetTaskAsync(int taskId)
+        {
+            return await _dbContext.Tasks.FirstOrDefaultAsync(task => task.Id == taskId);
         }
     }
 }

@@ -10,5 +10,7 @@ namespace ToDo.Application.Common.Interfaces
     public interface ITaskRepostory
     {
         Task CreateTaskAsync(TaskItem task);
+        Task DeleteTaskAsync(TaskItem task);
+        Task<TaskItem?> GetTaskAsync(int taskId);
     }
 }
