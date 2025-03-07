@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ToDo.Application.Tasks.Commands.CheckTask;
 using ToDo.Application.Tasks.Commands.CreateTask;
 using ToDo.Application.Tasks.Commands.DeleteTask;
 using ToDo.Application.Tasks.Commands.UpdateTask;
@@ -11,11 +13,11 @@ namespace ToDo.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TasksController : ControllerBase
+    public class TaskController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public TasksController(IMediator mediator)
+        public TaskController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -77,6 +79,23 @@ namespace ToDo.Api.Controllers
             }
 
             return Ok(task);
+        }
+
+        [HttpPut("check/{taskId}")]
+        public async Task<IActionResult> CheckTask(int taskId)
+        {
+            var command = new CheckTaskCommand(taskId);
+
+            var result = await _mediator.Send(command);
+
+            if (result.IsError)
+            {
+                var error = result.FirstError;
+                return NotFound(new { error = error.Description });
+            }
+            
+            return Ok("done");
+               
         }
     }
 }
