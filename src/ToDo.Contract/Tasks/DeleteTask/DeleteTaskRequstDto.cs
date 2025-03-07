@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace ToDo.Contract.Tasks.DeleteTask
 {
-    public record DeleteTaskRequest(int TaskID);
+    public record DeleteTaskRequstDto(int taskId);
 }
