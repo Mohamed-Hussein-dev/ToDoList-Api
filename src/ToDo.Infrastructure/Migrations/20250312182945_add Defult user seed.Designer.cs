@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToDo.Infrastructure.Common.Persistence;
 
@@ -11,9 +12,11 @@ using ToDo.Infrastructure.Common.Persistence;
 namespace ToDo.Infrastructure.Migrations
 {
     [DbContext(typeof(ToDoDbContext))]
-    partial class ToDoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250312182945_add Defult user seed")]
+    partial class addDefultuserseed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace ToDo.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "88e1d778-6d56-4b86-9496-1c1554566cb9",
+                            Id = "a4359195-ab68-45ff-9dd6-b7ae6da49197",
                             Name = "admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "5f889104-6ddc-4e43-baca-58ff48f88d69",
+                            Id = "e4a8c909-6639-4da3-bde8-c65fb4550965",
                             Name = "user",
                             NormalizedName = "User"
                         });
@@ -152,8 +155,8 @@ namespace ToDo.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "7a34f08e-2535-498e-b16e-fb03babfd34c",
-                            RoleId = "88e1d778-6d56-4b86-9496-1c1554566cb9"
+                            UserId = "5110643b-7817-40f5-82ed-cc0a1fb75680",
+                            RoleId = "a4359195-ab68-45ff-9dd6-b7ae6da49197"
                         });
                 });
 
@@ -200,6 +203,7 @@ namespace ToDo.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
@@ -254,18 +258,18 @@ namespace ToDo.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7a34f08e-2535-498e-b16e-fb03babfd34c",
+                            Id = "5110643b-7817-40f5-82ed-cc0a1fb75680",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2d5c1bbb-045a-479b-87a1-61d9f2b8b7ab",
+                            ConcurrencyStamp = "b0c3e810-24b6-4022-afe4-c4e7be7fb134",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             FirstName = "Mohamed",
                             ImageUrl = "http//imag@img.com",
                             LastName = "Hussein",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEEnza7J4OP0ZHtcSmf4F6+OV0o6P0C5q0iooGv3lASjyfyyr6wUEuHLkRmSuevEOWg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJX3LbuhARAKQG/9lr9WHuGv441TZi7vTNaCZuTIEaiR3bjP+IjdCUKbHv1Mhbn4AQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "92519302-fb16-42d9-8fe5-186d175c0892",
+                            SecurityStamp = "62bc2c69-034a-4dce-abfe-2bac86330e8f",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });

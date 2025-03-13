@@ -21,6 +21,7 @@ namespace ToDo.Application.Tasks.Commands.CreateTask
         public async Task<ErrorOr<int>> Handle(CreateTaskCommand request, CancellationToken cancellationToken)
         {
             var newTask = new TaskItem {
+                UserId = "5110643b-7817-40f5-82ed-cc0a1fb75680",
                 TaskTitile = request.TaskTitle,
                 TaskDescription = request.TaskDescription,
                 DueDate = request.DueDate,

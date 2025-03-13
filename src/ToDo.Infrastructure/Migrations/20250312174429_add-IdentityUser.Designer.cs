@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToDo.Infrastructure.Common.Persistence;
 
@@ -11,9 +12,11 @@ using ToDo.Infrastructure.Common.Persistence;
 namespace ToDo.Infrastructure.Migrations
 {
     [DbContext(typeof(ToDoDbContext))]
-    partial class ToDoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250312174429_add-IdentityUser")]
+    partial class addIdentityUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,20 +50,6 @@ namespace ToDo.Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "88e1d778-6d56-4b86-9496-1c1554566cb9",
-                            Name = "admin",
-                            NormalizedName = "Admin"
-                        },
-                        new
-                        {
-                            Id = "5f889104-6ddc-4e43-baca-58ff48f88d69",
-                            Name = "user",
-                            NormalizedName = "User"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -148,13 +137,6 @@ namespace ToDo.Infrastructure.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "7a34f08e-2535-498e-b16e-fb03babfd34c",
-                            RoleId = "88e1d778-6d56-4b86-9496-1c1554566cb9"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -200,6 +182,7 @@ namespace ToDo.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
@@ -250,25 +233,6 @@ namespace ToDo.Infrastructure.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "7a34f08e-2535-498e-b16e-fb03babfd34c",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "2d5c1bbb-045a-479b-87a1-61d9f2b8b7ab",
-                            Email = "admin@admin.com",
-                            EmailConfirmed = true,
-                            FirstName = "Mohamed",
-                            ImageUrl = "http//imag@img.com",
-                            LastName = "Hussein",
-                            LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEEnza7J4OP0ZHtcSmf4F6+OV0o6P0C5q0iooGv3lASjyfyyr6wUEuHLkRmSuevEOWg==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "92519302-fb16-42d9-8fe5-186d175c0892",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@admin.com"
-                        });
                 });
 
             modelBuilder.Entity("ToDo.Domain.Entities.TaskItem", b =>
