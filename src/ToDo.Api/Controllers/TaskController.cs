@@ -29,7 +29,7 @@ namespace ToDo.Api.Controllers
         [HttpPost("CreateTask")]
         public async Task<IActionResult> CreateTask(CreateTaskRequestDto request)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = await getUserId();
             var command = new CreateTaskCommand(request.TaskTitile, request.TaskDescription, request.DueDate , userId);
             var result = await _mediator.Send(command);
 
@@ -45,7 +45,8 @@ namespace ToDo.Api.Controllers
         [HttpDelete("{TaskId}")]
         public async Task<IActionResult> DeleteTask(int TaskId)
         {
-            var command = new DeleteTaskCommand(TaskId);
+            var userId = await getUserId();
+            var command = new DeleteTaskCommand(TaskId , userId);
             var result = await _mediator.Send(command);
 
             if (result.IsError)
@@ -59,9 +60,9 @@ namespace ToDo.Api.Controllers
 
         [HttpGet("{TaskId}")]
         public async Task<IActionResult> GetTask(int TaskId) {
-            var command = new GetTaskCommand(TaskId);
+            var userId = await getUserId();
+            var command = new GetTaskCommand(TaskId, userId);
             var result = await _mediator.Send(command);
-
             if (result.IsError)
             {
                 var error = result.FirstError;
@@ -73,8 +74,8 @@ namespace ToDo.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateTask(TaskItem task)
         {
-            var command = new UpdateTaskCommand(task);
-
+            var userId = await getUserId();
+            var command = new UpdateTaskCommand(task, userId);
             var result = await _mediator.Send(command);
 
             if (result.IsError)
@@ -89,8 +90,8 @@ namespace ToDo.Api.Controllers
         [HttpPut("check/{taskId}")]
         public async Task<IActionResult> CheckTask(int taskId)
         {
-            var command = new CheckTaskCommand(taskId);
-
+            var userId = await getUserId();
+            var command = new CheckTaskCommand(taskId, userId);
             var result = await _mediator.Send(command);
 
             if (result.IsError)
@@ -106,13 +107,18 @@ namespace ToDo.Api.Controllers
         [HttpGet("GetAllTasks")]
         public async Task<IActionResult> GetAllTasks()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = await getUserId();
             var command = new GetAllTasksCommand(userId);
             var Tasks = await _mediator.Send(command);
 
             return Tasks.Match(
                 success => Ok(Tasks.Value),
                 errors => Problem(Tasks.FirstError.Description));
+        }
+
+        private async Task<string> getUserId()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
     }
 }

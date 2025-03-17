@@ -36,7 +36,7 @@ namespace ToDo.Application.Accounts.Register
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 Email = request.Email,
-                UserName = request.Email.Split('@')[0]
+                UserName = request.Email
             };
 
             var CreateNewUserResult = await _userManager.CreateAsync(newUser, request.Password);

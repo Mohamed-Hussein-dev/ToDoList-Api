@@ -28,7 +28,7 @@ namespace ToDo.Application.Accounts.LogIn
 
         public async Task<ErrorOr<string>> Handle(LogInCommand request, CancellationToken cancellationToken)
         {
-            var SignInResult = await _signInManager.PasswordSignInAsync(request.Email.Split('@')[0], request.PassWord, false , false);
+            var SignInResult = await _signInManager.PasswordSignInAsync(request.Email, request.PassWord, false , false);
 
             if(SignInResult.Succeeded)
             {

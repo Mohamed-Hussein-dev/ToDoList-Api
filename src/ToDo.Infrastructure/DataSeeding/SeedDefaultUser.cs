@@ -38,7 +38,7 @@ namespace ToDo.Infrastructure.DataSeeding
             };
 
             PasswordHasher<AppUser> hasher = new PasswordHasher<AppUser>();
-            user.PasswordHash = hasher.HashPassword(user, "admin_1234");
+            user.PasswordHash = hasher.HashPassword(user, "Admin_1234");
 
             return user;
         }
