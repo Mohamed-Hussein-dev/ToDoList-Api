@@ -1,18 +1,23 @@
 ﻿using ErrorOr;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using ToDo.Application.Tasks.Commands.CheckTask;
 using ToDo.Application.Tasks.Commands.CreateTask;
 using ToDo.Application.Tasks.Commands.DeleteTask;
 using ToDo.Application.Tasks.Commands.UpdateTask;
 using ToDo.Application.Tasks.Queries.GetTask;
+using ToDo.Application.Tasks.Queries.GetAllTasks;
 using ToDo.Contract.Tasks.CreateTask;
 using ToDo.Domain.Entities;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ToDo.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TaskController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -21,11 +26,11 @@ namespace ToDo.Api.Controllers
         {
             _mediator = mediator;
         }
-        [HttpPost]
+        [HttpPost("CreateTask")]
         public async Task<IActionResult> CreateTask(CreateTaskRequestDto request)
         {
-
-            var command = new CreateTaskCommand(request.TaskTitile, request.TaskDescription, request.DueDate);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var command = new CreateTaskCommand(request.TaskTitile, request.TaskDescription, request.DueDate , userId);
             var result = await _mediator.Send(command);
 
             if (result.IsError)
@@ -96,6 +101,18 @@ namespace ToDo.Api.Controllers
             
             return Ok("done");
                
+        }
+
+        [HttpGet("GetAllTasks")]
+        public async Task<IActionResult> GetAllTasks()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var command = new GetAllTasksCommand(userId);
+            var Tasks = await _mediator.Send(command);
+
+            return Tasks.Match(
+                success => Ok(Tasks.Value),
+                errors => Problem(Tasks.FirstError.Description));
         }
     }
 }

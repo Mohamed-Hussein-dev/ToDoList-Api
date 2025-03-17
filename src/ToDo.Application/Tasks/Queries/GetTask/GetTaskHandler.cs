@@ -24,6 +24,10 @@ namespace ToDo.Application.Tasks.Queries.GetTask
             if (task == null) {
                 return Error.NotFound(description: "Task Not Found");
             }
+            if (task.UserId != request.userId)
+            {
+                return Error.NotFound(description: "Task not found");
+            }
             return task;
         }
     }

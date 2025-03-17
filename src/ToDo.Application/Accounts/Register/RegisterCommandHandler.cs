@@ -46,10 +46,9 @@ namespace ToDo.Application.Accounts.Register
                 return Error.Failure(code: "Failed to Create new User");
             }
 
-            if (!await _userManager.IsInRoleAsync(newUser, "User"))
-            {
-                await _userManager.AddToRoleAsync(newUser, "User");
-            }
+            
+            await _userManager.AddToRoleAsync(newUser, "User");
+            
 
             var Token = await _tokenGenerator.GenerateTokenAsync(newUser, _userManager);
 

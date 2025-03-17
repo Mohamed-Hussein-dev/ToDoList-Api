@@ -30,6 +30,15 @@ namespace ToDo.Infrastructure
 
             services.AddScoped<ITaskRepostory, TaskRepostory>();
 
+
+            services.AddIdentity<AppUser, IdentityRole>(options =>
+            {
+                options.SignIn.RequireConfirmedEmail = false;
+                options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
+            })
+                .AddEntityFrameworkStores<ToDoDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -56,13 +65,7 @@ namespace ToDo.Infrastructure
             });
 
 
-            services.AddIdentity<AppUser, IdentityRole>(options =>
-            {
-                options.SignIn.RequireConfirmedEmail = false;
-                options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
-            })
-                 .AddEntityFrameworkStores<ToDoDbContext>()
-                 .AddDefaultTokenProviders();
+           
 
             services.AddScoped<ITokenGenerator , JwtTokenGenerator>();
 

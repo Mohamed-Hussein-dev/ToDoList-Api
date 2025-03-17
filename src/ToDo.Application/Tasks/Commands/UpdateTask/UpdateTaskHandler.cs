@@ -25,6 +25,11 @@ namespace ToDo.Application.Tasks.Commands.UpdateTask
                 return Error.NotFound(description: "Not Found Task");
             }
 
+            if (task.UserId != request.userId)
+            {
+                return Error.NotFound(description: "Task not found");
+            }
+
             await _taskRepostory.UpdateTaskAsync(request.Task);
 
             return Result.Updated;

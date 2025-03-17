@@ -33,6 +33,11 @@ namespace ToDo.Infrastructure.Tasks.Persistence
             
         }
 
+        public async Task<List<TaskItem>> GetAllTasksAsync(string userId)
+        {
+            return await _dbContext.Tasks.Where(task => task.UserId  == userId).ToListAsync();
+        }
+
         public async Task<TaskItem?> GetTaskAsync(int taskId)
         {
             return await _dbContext.Tasks.AsNoTracking().FirstOrDefaultAsync(task => task.Id == taskId);

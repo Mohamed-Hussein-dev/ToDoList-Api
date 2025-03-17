@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace ToDo.Contract.Account
 {
-    public record LoginReques([Required] string Email , [Required] string Password);
+    public record LogInRequestDto([Required] string Email , [Required] string Password);
 }

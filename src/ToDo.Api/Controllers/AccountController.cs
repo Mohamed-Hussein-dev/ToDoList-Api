@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using ToDo.Application.Accounts.LogIn;
 using ToDo.Application.Accounts.Register;
 using ToDo.Contract.Account;
 
@@ -31,6 +32,19 @@ namespace ToDo.Api.Controllers
             }
 
             return CreatedAtAction(nameof(Register) , new {Token = result.Value});
+        }
+
+        [HttpPost("LogIn")]
+        public async Task<IActionResult> Login(LogInRequestDto loginRequest)
+        {
+            var command = new LogInCommand(loginRequest.Email, loginRequest.Password);
+            var LogInResult = await _mediator.Send(command);
+
+            if(LogInResult.IsError)
+            {
+                return BadRequest(LogInResult.Errors);
+            }
+            return Ok(new {Token = LogInResult.Value});
         }
     }
 }
