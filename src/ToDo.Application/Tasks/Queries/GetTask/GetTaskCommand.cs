@@ -9,5 +9,5 @@ using ToDo.Domain.Entities;
 
 namespace ToDo.Application.Tasks.Queries.GetTask
 {
-    public record GetTaskCommand(int taskId):IRequest<ErrorOr<TaskItem>>;
+    public record GetTaskCommand(int taskId, string userId):IRequest<ErrorOr<TaskItem>>;
 }

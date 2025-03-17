@@ -24,6 +24,10 @@ namespace ToDo.Application.Tasks.Commands.DeleteTask
             {
                 return Error.NotFound(description: "Task Not Found");
             }
+            if (task.UserId != request.userId)
+            {
+                return Error.NotFound(description: "Task not found");
+            }
             await _taskRepostory.DeleteTaskAsync(task);
 
             return Result.Deleted;

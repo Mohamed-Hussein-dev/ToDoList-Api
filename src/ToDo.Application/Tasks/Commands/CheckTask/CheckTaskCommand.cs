@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace ToDo.Application.Tasks.Commands.CheckTask
 {
-    public record CheckTaskCommand(int taskId) : IRequest<ErrorOr<Updated>>;
+    public record CheckTaskCommand(int taskId, string userId) : IRequest<ErrorOr<Updated>>;
 }

@@ -28,6 +28,11 @@ namespace ToDo.Application.Tasks.Commands.CheckTask
                 return Error.NotFound(description :  "Task not found");
             }
 
+            if(task.UserId != request.userId)
+            {
+                return Error.NotFound(description: "Task not found");
+            }
+
             task.IsCompleted = !task.IsCompleted;
 
             await _taskRepostory.UpdateTaskAsync(task);

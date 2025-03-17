@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace ToDo.Application.Tasks.Commands.DeleteTask
 {
-    public record DeleteTaskCommand(int taskId) : IRequest<ErrorOr<Deleted>>;
+    public record DeleteTaskCommand(int taskId , string userId) : IRequest<ErrorOr<Deleted>>;
 }

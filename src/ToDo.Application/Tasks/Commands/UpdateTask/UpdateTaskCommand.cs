@@ -9,5 +9,5 @@ using ToDo.Domain.Entities;
 
 namespace ToDo.Application.Tasks.Commands.UpdateTask
 {
-    public record UpdateTaskCommand(TaskItem Task) : IRequest<ErrorOr<Updated>>;
+    public record UpdateTaskCommand(TaskItem Task , string userId) : IRequest<ErrorOr<Updated>>;
 }
